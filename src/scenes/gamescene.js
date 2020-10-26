@@ -1,5 +1,5 @@
 import 'phaser';
-import Phaser from 'phaser';
+import Carrot from '../sprites/carrot';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -15,6 +15,17 @@ export default class GameScene extends Phaser.Scene {
     } else if (sprite.x > gameWidth + halfWidth) {
       sprite.x = -halfWidth;
     }
+  }
+
+  addCarrotAbove(sprite) {
+    const y = sprite.y - sprite.displayHeight;
+
+    const carrot = this.carrots.get(sprite.x, y, 'carrot');
+    this.add.existing(carrot);
+
+    carrot.body.setSize(carrot.width, carrot.height);
+
+    return carrot;
   }
 
   preload() {
@@ -44,6 +55,12 @@ export default class GameScene extends Phaser.Scene {
     this.player.body.checkCollision.left = false;
     this.player.body.checkCollision.right = false;
 
+    this.carrots = this.physics.add.group({
+      classType: Carrot,
+    });
+    
+    this.physics.add.collider(this.platforms, this.carrots);
+
     this.cameras.main.startFollow(this.player);
     this.cameras.main.setDeadzone(this.scale.width * 1.5);
 
@@ -63,6 +80,7 @@ export default class GameScene extends Phaser.Scene {
       if (platform.y >= scrollY + 700) {
         platform.y = scrollY - Phaser.Math.Between(50, 100);
         platform.body.updateFromGameObject();
+        this.addCarrotAbove(platform); 
       }
     });
 
