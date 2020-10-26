@@ -6,12 +6,20 @@ export default class GameOver extends Phaser.Scene {
     super('GameOver');
   }
 
+  init(data) {
+    this.score = data.score;
+  }
+
   create() {
     const width = this.scale.width;
     const height = this.scale.height;
 
     this.add.text(width * 0.5, height * 0.5, 'Game Over', {
       fontSize: 48
+    }).setOrigin(0.5);
+
+    this.add.text(width * 0.5, (height * 0.3) * 2, `You collected ${this.score} carrots`, {
+      fontSize: 24
     }).setOrigin(0.5);
 
     this.input.keyboard.once('keydown_SPACE', () => {

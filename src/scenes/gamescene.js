@@ -101,7 +101,7 @@ export default class GameScene extends Phaser.Scene {
     const bottomPlaform = this.findBottomMostPlatform();
 
     if (this.player.y > bottomPlaform.y + 200) {
-      this.scene.start('GameOver');
+      this.scene.start('GameOver', { score: this.carrotsCollected });
     }
 
     if (touchingDown) {
