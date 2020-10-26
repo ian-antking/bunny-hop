@@ -6,6 +6,17 @@ export default class GameScene extends Phaser.Scene {
     super('Game');
   }
 
+  horizontalWrap(sprite) {
+    const halfWidth = sprite.displayWidth * 0.5;
+    const gameWidth = this.scale.width;
+    
+    if (sprite.x < -halfWidth) {
+      sprite.x = gameWidth + halfWidth;
+    } else if (sprite.x > gameWidth + halfWidth) {
+      sprite.x = -halfWidth;
+    }
+  }
+
   preload() {
   }
 
@@ -62,5 +73,7 @@ export default class GameScene extends Phaser.Scene {
     } else {
       this.player.setVelocityX(0);
     }
+
+    this.horizontalWrap(this.player);
   }
 }
