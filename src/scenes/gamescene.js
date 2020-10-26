@@ -21,11 +21,22 @@ export default class GameScene extends Phaser.Scene {
     const y = sprite.y - sprite.displayHeight;
 
     const carrot = this.carrots.get(sprite.x, y, 'carrot');
+
+    carrot.setActive(true);
+    carrot.setVisible(true);
+
     this.add.existing(carrot);
 
     carrot.body.setSize(carrot.width, carrot.height);
 
+    this.physics.world.enable(carrot);
+
     return carrot;
+  }
+
+  handleCollectCarrot(_, carrot) {
+    this.carrots.killAndHide(carrot);
+    this.physics.world.disableBody(carrot.body);
   }
 
   preload() {
@@ -61,6 +72,14 @@ export default class GameScene extends Phaser.Scene {
     
     this.physics.add.collider(this.platforms, this.carrots);
 
+    this.physics.add.overlap(
+      this.player,
+      this.carrots,
+      this.handleCollectCarrot,
+      null,
+      this
+    );
+
     this.cameras.main.startFollow(this.player);
     this.cameras.main.setDeadzone(this.scale.width * 1.5);
 
@@ -77,10 +96,19 @@ export default class GameScene extends Phaser.Scene {
     this.platforms.children.iterate(platform => {
       const scrollY = this.cameras.main.scrollY;
 
-      if (platform.y >= scrollY + 700) {
+      if (platform.y >= scrollY + this.scale.height) {
         platform.y = scrollY - Phaser.Math.Between(50, 100);
         platform.body.updateFromGameObject();
         this.addCarrotAbove(platform); 
+      }
+    });
+
+    this.carrots.children.iterate(carrot => {
+      const scrollY = this.cameras.main.scrollY;
+
+      if (carrot.y >= scrollY + this.scale.height) {
+        this.carrots.killAndHide(carrot);
+        this.physics.world.disableBody(carrot.body);
       }
     });
 
