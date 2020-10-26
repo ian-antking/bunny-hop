@@ -33,6 +33,14 @@ export default class GameScene extends Phaser.Scene {
     this.scoreText.setText(`Carrots: ${this.carrotsCollected}`);
   }
 
+  findBottomMostPlatform() {
+    const platforms = this.platforms.getChildren();
+
+    return platforms.reduce((previousPlatform, currentPlatform) => {
+      return  previousPlatform.y > currentPlatform.y ? previousPlatform : currentPlatform;
+    });
+  }
+
   preload() {
   }
 
@@ -87,6 +95,11 @@ export default class GameScene extends Phaser.Scene {
 
   update() {
     const touchingDown = this.player.body.touching.down;
+    const bottomPlaform = this.findBottomMostPlatform();
+
+    if (this.player.y > bottomPlaform.y + 200) {
+      this.scene.start('GameOver');
+    }
 
     if (touchingDown) {
       this.player.setVelocityY(-300);
