@@ -34,7 +34,9 @@ export default class GameScene extends Phaser.Scene {
     this.player.body.checkCollision.right = false;
 
     this.cameras.main.startFollow(this.player);
+    this.cameras.main.setDeadzone(this.scale.width * 1.5);
 
+    this.cursors = this.input.keyboard.createCursorKeys();
   }
 
   update() {
@@ -52,5 +54,13 @@ export default class GameScene extends Phaser.Scene {
         platform.body.updateFromGameObject();
       }
     });
+
+    if (this.cursors.left.isDown && !touchingDown) {
+      this.player.setVelocityX(-200);
+    } else if (this.cursors.right.isDown && !touchingDown) {
+      this.player.setVelocityX(200);
+    } else {
+      this.player.setVelocityX(0);
+    }
   }
 }
