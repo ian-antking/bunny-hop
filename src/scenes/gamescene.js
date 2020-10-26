@@ -5,7 +5,6 @@ import horizontalWrap from '../utils/horizontal-wrap';
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super('Game');
-    this.carrotsCollected = 0;
   }
 
   addCarrotAbove(sprite) {
@@ -39,6 +38,10 @@ export default class GameScene extends Phaser.Scene {
     return platforms.reduce((previousPlatform, currentPlatform) => {
       return  previousPlatform.y > currentPlatform.y ? previousPlatform : currentPlatform;
     });
+  }
+
+  init() {
+    this.carrotsCollected = 0;
   }
 
   preload() {
