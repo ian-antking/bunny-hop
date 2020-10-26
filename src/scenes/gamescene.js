@@ -23,5 +23,23 @@ export default class GameScene extends Phaser.Scene {
       const body = platform.body;
       body.updateFromGameObject();
     }
+
+    this.player = this.physics.add.sprite(240, 320, 'bunny-stand').setScale(0.5);
+    this.physics.add.collider(platforms, this.player);
+
+    this.player.body.checkCollision.up = false;
+    this.player.body.checkCollision.left = false;
+    this.player.body.checkCollision.right = false;
+
+    this.cameras.main.startFollow(this.player);
+
+  }
+
+  update() {
+    const touchingDown = this.player.body.touching.down;
+
+    if (touchingDown) {
+      this.player.setVelocityY(-300);
+    }
   }
 }

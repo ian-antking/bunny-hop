@@ -83,6 +83,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('logo', 'assets/logo.png');
     this.load.image('background', 'assets/background/bg_layer1.png');
     this.load.image('platform', 'assets/environment/ground_grass.png');
+    this.load.image('bunny-stand', 'assets/player/bunny1_stand.png');
   }
 
   create() {
