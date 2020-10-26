@@ -1,20 +1,10 @@
 import 'phaser';
 import Carrot from '../sprites/carrot';
+import horizontalWrap from '../utils/horizontal-wrap';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super('Game');
-  }
-
-  horizontalWrap(sprite) {
-    const halfWidth = sprite.displayWidth * 0.5;
-    const gameWidth = this.scale.width;
-    
-    if (sprite.x < -halfWidth) {
-      sprite.x = gameWidth + halfWidth;
-    } else if (sprite.x > gameWidth + halfWidth) {
-      sprite.x = -halfWidth;
-    }
   }
 
   addCarrotAbove(sprite) {
@@ -108,7 +98,7 @@ export default class GameScene extends Phaser.Scene {
 
       if (carrot.y >= scrollY + this.scale.height) {
         this.carrots.killAndHide(carrot);
-        this.physics.world.disableBody(carrot.body);
+        this.physics.world.disableBody(carrot.body); 
       }
     });
 
@@ -120,6 +110,6 @@ export default class GameScene extends Phaser.Scene {
       this.player.setVelocityX(0);
     }
 
-    this.horizontalWrap(this.player);
+    horizontalWrap(this.player, this);
   }
 }
