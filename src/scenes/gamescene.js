@@ -5,6 +5,7 @@ import horizontalWrap from '../utils/horizontal-wrap';
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super('Game');
+    this.carrotsCollected = 0;
   }
 
   addCarrotAbove(sprite) {
@@ -27,6 +28,9 @@ export default class GameScene extends Phaser.Scene {
   handleCollectCarrot(_, carrot) {
     this.carrots.killAndHide(carrot);
     this.physics.world.disableBody(carrot.body);
+    this.carrotsCollected += 1;
+
+    this.scoreText.setText(`Carrots: ${this.carrotsCollected}`);
   }
 
   preload() {
@@ -49,7 +53,7 @@ export default class GameScene extends Phaser.Scene {
       body.updateFromGameObject();
     }
 
-    this.player = this.physics.add.sprite(240, 320, 'bunny-stand').setScale(0.5);
+    this.player = this.physics.add.sprite(this.scale.width * 0.5, this.scale.height * 0.5, 'bunny-stand').setScale(0.5);
     this.physics.add.collider(this.platforms, this.player);
 
     this.player.body.checkCollision.up = false;
@@ -69,6 +73,11 @@ export default class GameScene extends Phaser.Scene {
       null,
       this
     );
+
+    const textStyle = { fill: '#000', fontSize: 24 };
+    this.scoreText = this.add.text(this.scale.width * 0.5, 10, 'Carrots: 0', textStyle)
+      .setScrollFactor(0)
+      .setOrigin(0.5, 0);
 
     this.cameras.main.startFollow(this.player);
     this.cameras.main.setDeadzone(this.scale.width * 1.5);
