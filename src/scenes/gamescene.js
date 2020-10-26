@@ -10,7 +10,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(240, 320, 'background');
+    this.add.image(240, 320, 'background')
+      .setScrollFactor(1, 0);
 
     this.platforms = this.physics.add.staticGroup();
     
@@ -50,6 +51,6 @@ export default class GameScene extends Phaser.Scene {
         platform.y = scrollY - Phaser.Math.Between(50, 100);
         platform.body.updateFromGameObject();
       }
-    })
+    });
   }
 }
