@@ -106,6 +106,11 @@ export default class GameScene extends Phaser.Scene {
 
     if (touchingDown) {
       this.player.setVelocityY(-300);
+      this.player.setTexture('bunny-jump');
+    }
+
+    if (this.player.body.velocity.y > 0) {
+      this.player.setTexture('bunny-stand');
     }
 
     this.platforms.children.iterate(platform => {
