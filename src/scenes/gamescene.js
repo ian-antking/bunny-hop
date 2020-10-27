@@ -85,7 +85,7 @@ export default class GameScene extends Phaser.Scene {
       this
     );
 
-    const textStyle = { fill: '#000', fontSize: 24 };
+    const textStyle = { fill: '#000', fontSize: 24, fontFamily: 'sans-serif' };
     this.scoreText = this.add.text(this.scale.width * 0.5, 10, 'Carrots: 0', textStyle)
       .setScrollFactor(0)
       .setOrigin(0.5, 0);

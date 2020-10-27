@@ -19,7 +19,7 @@ export default class TitleScene extends Phaser.Scene {
       y: height / 2 + 100,
       text: 'Press Spacebar',
       style: {
-        font: '20px monospace',
+        font: '20px sans-serif',
         fill: '#ffffff',
       },
     });

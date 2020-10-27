@@ -15,10 +15,12 @@ export default class GameOver extends Phaser.Scene {
     const height = this.scale.height;
 
     this.add.text(width * 0.5, height * 0.5, 'Game Over', {
-      fontSize: 48
+      fontSize: 48,
+      fontFamily: 'sans-serif'
     }).setOrigin(0.5);
 
     this.add.text(width * 0.5, (height * 0.3) * 2, `You collected ${this.score} carrots`, {
+      fontFamily: 'sans-serif',
       fontSize: 24
     }).setOrigin(0.5);
 
